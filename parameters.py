@@ -9,22 +9,24 @@ class Parameters:
 
         self.output_filename = 'data/tmp'
 
-        self.num_epochs = 10000         # number of training epochs
-        self.simu_len = 10             # length of the busy cycle that repeats itself
-        self.num_ex = 1                # number of sequences
-
-        self.output_freq = 10          # interval for output and store parameters
-
-        self.num_seq_per_batch = 10    # number of sequences to compute baseline
-        self.episode_max_length = 200  # enforcing an artificial terminal
-
+        self.num_epochs = 10000  # number of training epochs
+        self.output_freq = 10  # interval for output and store parameters
+        self.num_ex = 1                # number of sequences  ## number of jobsets
+        self.num_seq_per_batch = 10  # number of sequences to compute baseline  ## number of episodes
+        self.episode_max_length = 200  # enforcing an artificial terminal  ## L - number of actions in each episode
+        self.discount = 1  # discount factor ## Gamma
         self.num_res = 2               # number of resources in the system
-        self.num_nw = 5                # maximum allowed number of work in the queue
+        self.res_slot = 10  # maximum number of available resource slots ## width of cluster image
+        self.time_horizon = 20  # number of time steps in the graph  ## height of cluster image
+        self.max_job_len = 15  # maximum duration of new jobs ## max height of job image
+        self.max_job_size = 10  # maximum resource request of new work ## max width of job_image
+        self.lr_rate = 0.001  # learning rate
+        self.rms_rho = 0.9  # for rms prop
+        self.rms_eps = 1e-9  # for rms prop
+        self.simu_len = 10  # length of the busy cycle that repeats itself ## simulation length considered i.e. max number of jobs considered in a jobset.
+        self.num_nw = 5                # maximum allowed number of work in the queue ## number of waiting jobs which the scheduler can see.
 
-        self.time_horizon = 20         # number of time steps in the graph
-        self.max_job_len = 15          # maximum duration of new jobs
-        self.res_slot = 10             # maximum number of available resource slots
-        self.max_job_size = 10         # maximum resource request of new work
+
 
         self.backlog_size = 60         # backlog queue size
 
@@ -34,7 +36,7 @@ class Parameters:
 
         self.new_job_rate = 0.7        # lambda in new job arrival Poisson Process
 
-        self.discount = 1           # discount factor
+
 
         # distribution for new job arrival
         self.dist = job_distribution.Dist(self.num_res, self.max_job_size, self.max_job_len)
@@ -60,9 +62,7 @@ class Parameters:
         self.dismiss_penalty = -1     # penalty for missing a job because the queue is full
 
         self.num_frames = 1           # number of frames to combine and process
-        self.lr_rate = 0.001          # learning rate
-        self.rms_rho = 0.9            # for rms prop
-        self.rms_eps = 1e-9           # for rms prop
+
 
         self.unseen = False  # change random seed to generate unseen example
 
